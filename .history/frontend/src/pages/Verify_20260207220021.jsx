@@ -1,0 +1,43 @@
+import axios from 'axios'
+import React from 'react'
+import { useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { server } from '../main'
+import Loading from '../Loading'
+
+const Verify = () => {
+  const [successMessage, setSuccessMessage] = useState("")
+  const [errorMessage,setErrorMessage]=useState("")
+  const params = useParams()
+const [loading,setLoading] = useState(false)
+  async function verifyUser(){
+    try {
+      const {data}=axios.post(`${server}/api/user/verify/:token`)
+      setSuccessMessage(data.message)
+
+    } catch (error) {
+      setErrorMessage(error.response.data.message)
+    }finally{
+      setLoading(false)
+    }
+  }
+
+  return (
+   <>
+   {
+    loading?(<Loading/>):(
+
+      <div className='w-400 m-auto mt-40'>
+        <p className='text-green-500 text-3xl'>
+Account verifyed
+        </p>
+      </div>
+    )
+
+   }
+   
+   </>
+  )
+}
+
+export default Verify
