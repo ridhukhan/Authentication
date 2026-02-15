@@ -12,7 +12,6 @@ import Dashboard from './pages/Dashboard'
 import Allusers from './pages/Allusers'
 import Conversation from './pages/Conversation'
 import ForgotPass from './pages/ForgotPass'
-import ResetPassword from './pages/ResetPassword'
 function App() {
 const {isAuth,loading}=AppData()
   return (
@@ -30,8 +29,6 @@ const {isAuth,loading}=AppData()
         <Route  path='/allusers' element={isAuth? <Allusers/>:<Login/>}/>
 <Route path='/chat/:id' element={isAuth?<Conversation/>:<Login/>}/>
 <Route path='/forgot-password' element={<ForgotPass/>}/>
-<Route path='/reset-password/:token' element={<ResetPassword/>}/>
-
        </Routes>
        </BrowserRouter>)}
     </>

@@ -275,7 +275,7 @@ await redisClint.set(key,user._id.toString(),{EX:600})
 
 const resetLink=`http://localhost:5173/reset-password/${resetToken}`;
 
-const html=`<p>click here to to reset password: <a>${resetLink} </a>expire in 10 min</p>`;
+const html=`<p>click here to to reset password<a>${resetLink} </a>expire in 10 min</p>`;
 
 await sendMail({email,subject:"reset ur password",html})
 
@@ -287,38 +287,10 @@ res.status(200).json({message:"send a reset link in ur email"})
     console.log(error.message)
     res.status(500).json({message:"forgot server error"})
    }
+
+
+
 }
-
-
-export const resetPassword = async(req,res)=>{
-    try {
-       const {token}=req.params;
-       
-       const {password}=req.body;
-if(!password) return res.status(400).json({message:"password reqired"})
-      
-    const key = `reset:${token}`;
-    const userId= await redisClint.get(key);
-
-    if(!userId) return res.status(400).json({message:"resetLink Expired"})
-const hash =await bcrypt.hash(password,10);
-    await User.findByIdAndUpdate(userId,{password: hash})
-
-await redisClint.del(key)
-
-res.status(200).json({message:"password reset successfully"})
-
-    } catch (error) {
-        console.log(error.message)
-
-        res.status(500).json({message:"password reset controller problem"})
-    }
-}
-
-
-
-
-
 
 export const getAllUsers = TryCatch(async(req,res)=>{
 const users = await User.find({

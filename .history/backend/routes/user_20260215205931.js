@@ -1,6 +1,6 @@
 import express from "express"
-import { adminController, frogotPassword, getAllUsers, getUserById, loginUser, logoutUser, myprofile, refreshCSRF, 
-    refreshToken, registerUser,resetPassword,verifyOtp,verifyUser } from "../controllers/user.js";
+import { adminController, getAllUsers, getUserById, loginUser, logoutUser, myprofile, refreshCSRF, 
+    refreshToken, registerUser,verifyOtp,verifyUser } from "../controllers/user.js";
 import { authorizedAdmin, isAuth } from "../middlewares/isAuth.js";
 import { verifyCSRFToken } from "../config/csrfMiddleware.js";
 import { getMessage, sendMessage } from "../controllers/message.controller.js";
@@ -18,8 +18,8 @@ router.post("/refresh-csrf", isAuth, refreshCSRF)
 
 // ✅ Specific routes FIRST (এগুলো আগে রাখতে হবে)
 router.get("/me", isAuth, myprofile)
-router.post("/forgot-password",frogotPassword)
-router.post("/reset-password/:token",resetPassword)
+router.post("forgot-password")
+router.post("reset-password")
 router.get("/admin", isAuth, authorizedAdmin, adminController)
 router.get("/users", isAuth, getAllUsers)
 router.get("/profile/:id",isAuth,getUserById)

@@ -275,7 +275,7 @@ await redisClint.set(key,user._id.toString(),{EX:600})
 
 const resetLink=`http://localhost:5173/reset-password/${resetToken}`;
 
-const html=`<p>click here to to reset password: <a>${resetLink} </a>expire in 10 min</p>`;
+const html=`<p>click here to to reset password<a>${resetLink} </a>expire in 10 min</p>`;
 
 await sendMail({email,subject:"reset ur password",html})
 
