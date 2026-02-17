@@ -3,6 +3,7 @@ import { redisClint } from "../index.js";
 import { genarateCSRFToken, revokeCSRFTOKEN } from "./csrfMiddleware.js";
 import crypto from "crypto";
 
+const isProd = true; 
 
 export const genarateToken = async (id, res) => {
     const sessionId = crypto.randomBytes(16).toString("hex");

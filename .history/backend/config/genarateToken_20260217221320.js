@@ -3,6 +3,8 @@ import { redisClint } from "../index.js";
 import { genarateCSRFToken, revokeCSRFTOKEN } from "./csrfMiddleware.js";
 import crypto from "crypto";
 
+// Render deployment-er jonno eti true thaka dorkar
+const isProd = true; 
 
 export const genarateToken = async (id, res) => {
     const sessionId = crypto.randomBytes(16).toString("hex");
@@ -18,10 +20,11 @@ export const genarateToken = async (id, res) => {
     const activeSessionKey = `active_session:${id}`;
     const sessionDataKey = `session:${sessionId}`;
 
+    // Purono session thakle seta muche dewa
     const existingSession = await redisClint.get(activeSessionKey);
     if (existingSession) {
         await redisClint.del(`session:${existingSession}`);
-        await redisClint.del(refreshTokenkey); 
+        await redisClint.del(refreshTokenkey); // Corrected: variable key use kora hoyeche
     }
 
     const sessionData = {
@@ -31,6 +34,7 @@ export const genarateToken = async (id, res) => {
         lastActivity: new Date().toISOString()
     };
 
+    // Redis-e data save kora
     await redisClint.setEx(refreshTokenkey, 7 * 24 * 60 * 60, refreshToken);
     await redisClint.setEx(
         sessionDataKey, 7 * 24 * 60 * 60,
@@ -38,11 +42,11 @@ export const genarateToken = async (id, res) => {
     );
     await redisClint.setEx(activeSessionKey, 7 * 24 * 60 * 60, sessionId);
 
-    
+    // Cookie Settings: Frontend (Vercel) theke Backend (Render) connect korar jonno sameSite: "none" hobe
     const cookieOptions = {
         httpOnly: true,
-        secure: true, 
-        sameSite: "none",
+        secure: true, // Render supports HTTPS
+        sameSite: "none", // S boro hater hobe
         maxAge: 15 * 60 * 1000
     };
 
