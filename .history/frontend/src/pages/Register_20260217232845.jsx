@@ -1,6 +1,5 @@
 import React from 'react'
 import { useState } from 'react'
-import api from '../apiinterchapter'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 const Register = () => {
