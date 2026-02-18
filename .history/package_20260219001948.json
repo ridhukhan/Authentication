@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "vercel-build": "vite build",
-    "start": "node backend/index.js",
-    "build": "vite build",
+    "vercel-build": "echo 'Building...'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
