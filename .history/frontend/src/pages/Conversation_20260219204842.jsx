@@ -64,7 +64,7 @@ const Conversation = () => {
   const sendMessage = async () => {
     if (!text.trim()) return
     try {
-      const { data } = await api.post(`/messsages/send/${id}`, { message: text })
+      const { data } = await api.post(`/user/send/${id}`, { message: text })
       setMessages(prev => [...prev, data])
       setText("")
     } catch (error) {
