@@ -6,7 +6,7 @@ const getCookie=(name)=>{
     if(parts.length===2) return parts.pop().split(";").shift()
 }
 const api = axios.create({
-    baseURL:"https://authentication-tz5b.onrender.com",
+    baseURL:"https://authentication-tz5b.onrender.com/",
     withCredentials:true,
 });
 
