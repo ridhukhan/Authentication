@@ -1,5 +1,5 @@
 import { loginSchema, registerSchema } from "../config/zod.js";
-import {redisClint} from "../index.js"
+import {redisClint} from "../index"
 import TryCatch from "../middlewares/trycatch.js";
 import sanitize from "mongo-sanitize"
 import { User } from "../models/user.js";
