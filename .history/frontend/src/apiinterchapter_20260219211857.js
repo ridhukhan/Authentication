@@ -5,16 +5,12 @@ const api = axios.create({
     withCredentials: true,
 });
 
+// Request interceptor — Authorization header যোগ করো
 api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem("accessToken");
         if (token) {
             config.headers["Authorization"] = `Bearer ${token}`;
-        }
-        // refreshToken header এ পাঠাও
-        const refreshToken = localStorage.getItem("refreshToken");
-        if (refreshToken) {
-            config.headers["x-refresh-token"] = refreshToken;
         }
         return config;
     },
@@ -51,8 +47,6 @@ const handleRefresh = async (type, endpoint, originalRequest) => {
     } catch (err) {
         processQueue(type, err);
         localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        window.location.href = "/login";
         return Promise.reject(err);
     } finally {
         flags[type] = false;
